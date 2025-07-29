@@ -1,0 +1,164 @@
+comment lancer https://github.com/microsoft/MoGe?tab=security-ov-file en mode web avec integration d'image ou video
+Pour lancer MoGe en mode web avec intégration d’image ou vidéo, tu peux utiliser son application interactive basée sur Gradio, qui permet de charger des images et d’explorer les résultats 3D en temps réel 🌐🖼️. Voici comment faire :
+
+🚀 Lancer MoGe en mode web
+Tu as deux options principales :
+
+1. Via la ligne de commande (localement)
+bash
+pip install git+https://github.com/microsoft/MoGe.git
+moge app
+Cela ouvre une interface web interactive où tu peux :
+
+Uploader une image (JPG, PNG)
+
+Choisir le modèle (MoGe-1 ou MoGe-2)
+
+Visualiser les résultats : carte de profondeur, carte normale, nuage de points, etc.
+
+Tu peux aussi exécuter directement :
+
+bash
+python moge/scripts/app.py
+2. Via Hugging Face Spaces (en ligne)
+MoGe propose une démo en ligne sur Hugging Face, accessible sans installation. Tu peux y uploader une image et explorer les résultats directement dans ton navigateur2.
+
+🎥 Intégration d’image ou vidéo
+Image : Tu peux uploader une image dans l’interface web ou utiliser la commande :
+
+bash
+moge infer -i image.jpg --o output_folder --maps --glb --ply
+Vidéo : MoGe ne traite pas directement les vidéos, mais tu peux :
+
+Extraire les frames d’une vidéo (avec ffmpeg par exemple)
+
+Traiter chaque frame avec MoGe
+
+Recomposer une vidéo à partir des résultats
+
+🧠 Résultats disponibles
+MoGe génère :
+
+Format	Description
+.png, .exr	Cartes de profondeur et normales
+.ply, .glb	Nuages de points et maillages 3D
+.json	Paramètres de caméra et FOV
+Tu veux que je t’aide à créer un script pour traiter une vidéo ou automatiser le traitement d’un dossier d’images ? 🎬📁 Je peux te guider étape par étape.
+
+
+
+
+
+donne moi tout pas a pas
+Parfait seb ! Voici tout le processus pas à pas pour lancer MoGe avec une image en mode web, directement depuis ton ordi. Je t’accompagne du début à la fin 💪
+
+⚙️ 1. Installer MoGe
+Ouvre ton terminal et installe le projet avec cette commande :
+
+bash
+pip install git+https://github.com/microsoft/MoGe.git
+Cela va télécharger MoGe et tout ce qu’il faut pour le faire tourner.
+
+🖥️ 2. Lancer l’application web interactive
+Une fois installé, lance l’interface Gradio (application web) avec :
+
+bash
+moge app
+👉 Cela ouvre une page dans ton navigateur, où tu peux :
+
+Glisser/déposer une image
+
+Choisir le modèle MoGe-1 ou MoGe-2
+
+Visualiser les résultats 3D en direct
+
+Tu peux aussi démarrer directement le script web avec :
+
+bash
+python -m moge.scripts.app
+🖼️ 3. Tester avec une image
+Tu peux aussi utiliser la ligne de commande pour tester une image :
+
+bash
+moge infer -i ton_image.jpg -o dossier_resultats --maps --glb --ply
+Cela génère :
+
+Une carte de profondeur
+
+Une carte de normales
+
+Un nuage de points (.ply) et un fichier .glb (maillage 3D)
+
+Des infos de caméra en .json
+
+🎬 4. Intégrer une vidéo (optionnel)
+MoGe ne prend pas directement des vidéos, mais voici comment faire :
+
+Extraire les frames avec ffmpeg :
+
+bash
+ffmpeg -i ta_video.mp4 frames/frame_%04d.png
+Traiter chaque image avec MoGe :
+
+bash
+moge infer -i frames/frame_0001.png -o resultats/frame_0001 --maps --glb --ply
+Recomposer une vidéo si besoin :
+
+bash
+ffmpeg -framerate 25 -i resultats/frame_%04d.png output_video.mp4
+📁 Résultats générés
+Fichier	Description
+.png/.exr	Cartes 2D (profondeur, normales)
+.ply/.glb	Modèles 3D (nuage de points / maillage)
+.json	Paramètres de caméra
+Tu veux que je t’aide à créer un script automatisé pour un dossier d’images ou une vidéo complète ? Je te le code avec plaisir 👨‍💻🔁 Tu me dis juste ce que tu veux en sortie !
+
+C:\Windows\System32>moge app Import modules... Load model... model.pt: 100%|███████████████████████████████████████████████████████████████████| 1.32G/1.32G [05:19<00:00, 4.15MB/s] Traceback (most recent call last): File "<frozen runpy>", line 198, in _run_module_as_main File "<frozen runpy>", line 88, in _run_code File "C:\Python312\Scripts\moge.exe\__main__.py", line 7, in <module> File "C:\Python312\Lib\site-packages\moge\scripts\cli.py", line 23, in main cli() File "C:\Python312\Lib\site-packages\click\core.py", line 1442, in __call__ return self.main(*args, **kwargs) ^^^^^^^^^^^^^^^^^^^^^^^^^^ File "C:\Python312\Lib\site-packages\click\core.py", line 1363, in main rv = self.invoke(ctx) ^^^^^^^^^^^^^^^^ File "C:\Python312\Lib\site-packages\click\core.py", line 1830, in invoke return _process_result(sub_ctx.command.invoke(sub_ctx)) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File "C:\Python312\Lib\site-packages\click\core.py", line 1226, in invoke return ctx.invoke(self.callback, **ctx.params) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File "C:\Python312\Lib\site-packages\click\core.py", line 794, in invoke return callback(*args, **kwargs) ^^^^^^^^^^^^^^^^^^^^^^^^^ File "C:\Python312\Lib\site-packages\moge\scripts\app.py", line 54, in main model = import_model_class_by_version(model_version).from_pretrained(pretrained_model_name_or_path).cuda().eval() ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File "C:\Python312\Lib\site-packages\torch\nn\modules\module.py", line 1065, in cuda return self._apply(lambda t: t.cuda(device)) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File "C:\Python312\Lib\site-packages\torch\nn\modules\module.py", line 915, in _apply module._apply(fn) File "C:\Python312\Lib\site-packages\torch\nn\modules\module.py", line 915, in _apply module._apply(fn) File "C:\Python312\Lib\site-packages\torch\nn\modules\module.py", line 915, in _apply module._apply(fn) [Previous line repeated 1 more time] File "C:\Python312\Lib\site-packages\torch\nn\modules\module.py", line 942, in _apply param_applied = fn(param) ^^^^^^^^^ File "C:\Python312\Lib\site-packages\torch\nn\modules\module.py", line 1065, in <lambda> return self._apply(lambda t: t.cuda(device)) ^^^^^^^^^^^^^^ File "C:\Python312\Lib\site-packages\torch\cuda\__init__.py", line 363, in _lazy_init raise AssertionError("Torch not compiled with CUDA enabled") AssertionError: Torch not compiled with CUDA enabled , y a t'il un probleme
+Oui seb, le message d’erreur est très clair : ta version de PyTorch n’a pas été compilée avec le support CUDA, donc elle ne peut pas utiliser ta carte graphique NVIDIA pour accélérer les calculs.
+
+🔍 Pourquoi cette erreur ?
+MoGe essaie de charger le modèle sur le GPU avec .cuda(), mais ta version de PyTorch est CPU-only. Cela peut arriver si :
+
+Tu as installé PyTorch sans spécifier CUDA
+
+Tu as une version de Python ou de pip qui installe automatiquement la version CPU
+
+Tu n’as pas de GPU compatible (mais vu le téléchargement du modèle, je pense que tu en as un)
+
+🛠️ Solution étape par étape
+Voici comment corriger ça :
+
+1. 🔄 Désinstaller la version actuelle
+bash
+pip uninstall torch torchvision torchaudio
+Tu peux le faire deux fois pour être sûr que tout est bien supprimé.
+
+2. ✅ Installer la version CUDA-compatible
+Va sur le site officiel de PyTorch : pytorch.org/get-started/locally
+
+Choisis :
+
+Stable
+
+Windows
+
+Pip
+
+Python 3.12
+
+CUDA 11.8 (ou la version compatible avec ta carte graphique)
+
+Et copie la commande proposée, par exemple :
+
+bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+💡 Si tu ne sais pas quelle version de CUDA est installée sur ton PC, tape :
+
+bash
+nvidia-smi
+✅ Vérification
+Après installation, vérifie que tout est bon :
+
+python
+import torch
+print
